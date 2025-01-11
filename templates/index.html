@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Xvfb Web</title>
+</head>
+<body>
+    <h1>Xvfb Displays</h1>
+    {% if displays %}
+        <ul>
+            {% for display_id, details in displays.items() %}
+                <li>
+                    Display ID: {{ display_id }}<br>
+                    Command: {{ details['command'] }}
+                    <form action="{{ url_for('stop_display', display_id=display_id) }}" method="post">
+                        <input type="submit" value="Stop">
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        No active displays.
+    {% endif %}
+    <hr>
+    <form action="{{ url_for('create_display') }}" method="post">
+        <label for="command">Command:</label><br>
+        <input type="text" id="command" name="command"><br><br>
+        <input type="submit" value="Create New Display">
+    </form>
+</body>
+</html>
