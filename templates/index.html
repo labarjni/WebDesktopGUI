@@ -12,7 +12,7 @@
                 <li>
                     Display ID: {{ display_id }}<br>
                     Command: {{ details['command'] }}<br>
-                    <img src="/static/visual_previews/{{display_id}}.png" width="800" height="420"><br>
+                    <img src="/static/visual_previews/{{display_id}}.png" width="640" height="360"><br>
                     <form action="{{ url_for('stop_display', display_id=display_id) }}" method="post">
                         <input type="submit" value="Stop">
                     </form>
