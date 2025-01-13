@@ -7,4 +7,4 @@ Allows you to visually display running programs through the Xvfb utility<br><br>
 ```chmod +x run.sh```<br><br>
 • Install the dependencies and run the script:<br><br>
 ```./run.sh```<br><br>
-• Ready! The web server is running on ```0.0.0.0:100```
+• Ready! The web server is running on port 100
