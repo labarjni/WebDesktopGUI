@@ -1,5 +1,5 @@
 # WebDesktopGUI
-Allows you to visually display running programs through the Xvfb utility<br><br>
+Allows you to visually display running Linux programs through the Xvfb utility<br><br>
 ![image](https://github.com/user-attachments/assets/bc99ffec-aa0a-4023-a575-2e7aa164cce0)
 
 
