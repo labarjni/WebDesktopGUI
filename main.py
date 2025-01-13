@@ -53,6 +53,13 @@ def run_command(display_id, command):
 def index():
     return render_template('index.html', displays=displays)
 
+def create_visual(display_id):
+    if not os.path.exists("static/visual_previews"):
+        os.makedirs("static/visual_previews")
+
+    subprocess.Popen(
+        f"xwd -root -display :{display_id} > static/visual_previews/{display_id}.xwd && convert static/visual_previews/{display_id}.xwd static/visual_previews/{display_id}.png && rm static/visual_previews/{display_id}.xwd",
+        shell=True)
 
 @app.route('/create_display', methods=['POST'])
 def create_display():
@@ -64,6 +71,10 @@ def create_display():
         thread.start()
         displays[display_id] = {'command': command}
 
+    sleep(2)
+
+    create_visual(display_id)
+
     return redirect(url_for('index'))
 
 
@@ -73,15 +84,12 @@ def stop_display(display_id):
 
 def load_visuals():
     while True:
-        if not os.path.isdir("static/visual_previews"):
-            os.mkdir("static/visual_previews")
-
         for display_id, details in displays.items():
-            subprocess.Popen(f"xwd -root -display :{display_id} > static/visual_previews/{display_id}.xwd && convert static/visual_previews/{display_id}.xwd static/visual_previews/{display_id}.png && rm static/visual_previews/{display_id}.xwd", shell=True)
+            create_visual(display_id)
         time.sleep(5)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=100)
-
-    background_thread = threading.Thread(target=load_visuals, daemon=True)
+    background_thread = Thread(target=load_visuals, daemon=True)
     background_thread.start()
+
+    app.run(host='0.0.0.0', port=100)
