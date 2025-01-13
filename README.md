@@ -1,5 +1,7 @@
 # WebDesktopGUI
-Allows you to visually display running programs through the Xvfb utility
+Allows you to visually display running programs through the Xvfb utility<br><br>
+![image](https://github.com/user-attachments/assets/d50cd5df-b955-4a38-bb3d-4af1f584b876)
+
 # Setup & Run
 • Make the file ```run.sh``` executable:<br><br>
 ```chmod +x run.sh```<br><br>
