@@ -1,3 +1,6 @@
+import datetime
+from time import sleep
+
 from flask import (
     Flask,
     request,
@@ -15,7 +18,7 @@ import subprocess
 import time
 import tempfile
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static', static_folder='static')
 
 displays = {}
 
@@ -68,5 +71,17 @@ def create_display():
 def stop_display(display_id):
     print('TODO')
 
+def load_visuals():
+    while True:
+        if not os.path.isdir("static/visual_previews"):
+            os.mkdir("static/visual_previews")
+
+        for display_id, details in displays.items():
+            subprocess.Popen(f"xwd -root -display :{display_id} > static/visual_previews/{display_id}.xwd && convert static/visual_previews/{display_id}.xwd static/visual_previews/{display_id}.png && rm static/visual_previews/{display_id}.xwd", shell=True)
+        time.sleep(5)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=100)
+
+    background_thread = threading.Thread(target=load_visuals, daemon=True)
+    background_thread.start()
